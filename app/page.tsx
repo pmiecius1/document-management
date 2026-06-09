@@ -9,7 +9,7 @@ export default function Home() {
         Everything is stored locally in your browser — no account required.
       </p>
       <Link
-        href="/workspace"
+        href="/docs"
         className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
       >
         Go to Workspace
