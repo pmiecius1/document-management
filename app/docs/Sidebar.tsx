@@ -44,7 +44,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="flex w-64 shrink-0 flex-col border-r border-zinc-200">
+      <aside className="flex w-full shrink-0 flex-col border-r border-zinc-200 md:w-64">
         <div className="border-b border-zinc-200 px-4 py-4">
           <button
             onClick={handleNewDocument}

@@ -57,7 +57,13 @@ export default function Editor({ id }: Props) {
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
-      <div className="flex items-center justify-between border-b border-zinc-200 px-8 py-3">
+      <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 md:px-8">
+        <Link
+          href="/docs"
+          className="mr-3 shrink-0 text-sm text-zinc-400 hover:text-zinc-600 md:hidden"
+        >
+          ← Back
+        </Link>
         <input
           type="text"
           value={title}
