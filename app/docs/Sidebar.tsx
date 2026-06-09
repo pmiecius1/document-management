@@ -65,8 +65,18 @@ export default function Sidebar() {
         </div>
         <ul className="flex-1 overflow-y-auto py-2">
           {filtered === undefined ? null : filtered.length === 0 ? (
-            <li className="px-4 py-3 text-sm text-zinc-400">
-              {query ? "No matching documents." : "No documents yet."}
+            <li className="px-4 py-6">
+              {query ? (
+                <>
+                  <p className="text-sm font-medium text-zinc-700">No results</p>
+                  <p className="mt-1 text-xs text-zinc-400">No documents match &ldquo;{query}&rdquo;.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm font-medium text-zinc-700">No documents yet</p>
+                  <p className="mt-1 text-xs text-zinc-400">Click New Document to create your first one.</p>
+                </>
+              )}
             </li>
           ) : (
             filtered.map((doc) => (
