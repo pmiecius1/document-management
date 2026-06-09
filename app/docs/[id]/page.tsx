@@ -1,4 +1,4 @@
-import Editor from "./Editor";
+import EditorClient from "./EditorClient";
 
 export default async function DocPage({
   params,
@@ -6,5 +6,5 @@ export default async function DocPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <Editor id={Number(id)} />;
+  return <EditorClient id={Number(id)} />;
 }

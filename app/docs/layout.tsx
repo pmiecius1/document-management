@@ -1,4 +1,8 @@
-import Sidebar from "./Sidebar";
+"use client";
+
+import dynamic from "next/dynamic";
+
+const Sidebar = dynamic(() => import("./Sidebar"), { ssr: false });
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
