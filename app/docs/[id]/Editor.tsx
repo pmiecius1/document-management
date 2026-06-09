@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import db from "@/lib/db";
 
 interface Props {
@@ -11,14 +12,18 @@ export default function Editor({ id }: Props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [saved, setSaved] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const initialized = useRef(false);
 
   useEffect(() => {
     initialized.current = false;
+    setNotFound(false);
     db.documents.get(id).then((doc) => {
       if (doc) {
         setTitle(doc.title);
         setContent(doc.content);
+      } else {
+        setNotFound(true);
       }
       initialized.current = true;
     });
@@ -33,6 +38,17 @@ export default function Editor({ id }: Props) {
     }, 500);
     return () => clearTimeout(timer);
   }, [title, content, id]);
+
+  if (notFound) {
+    return (
+      <main className="flex flex-1 flex-col items-center justify-center gap-3">
+        <p className="text-sm font-medium text-zinc-700">Document not found.</p>
+        <Link href="/docs" className="text-sm text-zinc-400 underline hover:text-zinc-600">
+          Back to workspace
+        </Link>
+      </main>
+    );
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
