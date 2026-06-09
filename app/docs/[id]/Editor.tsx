@@ -16,6 +16,8 @@ export default function Editor({ id }: Props) {
   const [notFound, setNotFound] = useState(false);
   const [mode, setMode] = useState<"edit" | "preview">("edit");
   const initialized = useRef(false);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     initialized.current = false;
@@ -24,6 +26,7 @@ export default function Editor({ id }: Props) {
       if (doc) {
         setTitle(doc.title);
         setContent(doc.content);
+        titleRef.current?.focus();
       } else {
         setNotFound(true);
       }
@@ -59,8 +62,15 @@ export default function Editor({ id }: Props) {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          ref={titleRef}
           placeholder="Untitled"
           className="flex-1 bg-transparent text-xl font-semibold text-zinc-900 placeholder-zinc-300 outline-none"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              bodyRef.current?.focus();
+            }
+          }}
         />
         <div className="ml-4 flex items-center gap-3">
           <span
@@ -95,6 +105,7 @@ export default function Editor({ id }: Props) {
 
       {mode === "edit" ? (
         <textarea
+          ref={bodyRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={"Start writing… (Markdown supported)\n\n# Heading\n**bold**  _italic_\n- bullet"}
