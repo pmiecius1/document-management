@@ -1,5 +1,7 @@
 # Linking Components
 
+Source: https://nextjs.org/docs/app/api-reference/components/link#reference
+
 ## `<Link>`
 
 `<Link>` is a React component that extends the HTML `<a>` element to provide prefetching and client-side navigation between routes. It is the primary way to navigate between routes in Next.js.
@@ -11,5 +13,3 @@ export default function Page() {
   return <Link href="/dashboard">Dashboard</Link>
 }
 ```
-
-Source: https://nextjs.org/docs/app/api-reference/components/link#reference
