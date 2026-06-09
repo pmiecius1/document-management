@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
 
-interface Props {
-  selectedId: number | null;
-  onSelect: (id: number) => void;
-}
-
-export default function Sidebar({ selectedId, onSelect }: Props) {
+export default function Sidebar() {
   const [query, setQuery] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
 
   const documents = useLiveQuery(
     () => db.documents.orderBy("updatedAt").reverse().toArray(),
@@ -28,7 +26,7 @@ export default function Sidebar({ selectedId, onSelect }: Props) {
       updatedAt: Date.now(),
       createdAt: Date.now(),
     });
-    onSelect(id as number);
+    router.push(`/docs/${id}`);
   }
 
   return (
@@ -60,9 +58,9 @@ export default function Sidebar({ selectedId, onSelect }: Props) {
           filtered.map((doc) => (
             <li key={doc.id}>
               <button
-                onClick={() => onSelect(doc.id!)}
+                onClick={() => router.push(`/docs/${doc.id}`)}
                 className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
-                  doc.id === selectedId
+                  pathname === `/docs/${doc.id}`
                     ? "bg-zinc-100 font-medium text-zinc-900"
                     : "text-zinc-700 hover:bg-zinc-50"
                 }`}
