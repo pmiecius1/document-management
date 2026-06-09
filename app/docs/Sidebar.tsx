@@ -21,9 +21,16 @@ export default function Sidebar() {
     []
   );
 
-  const filtered = documents?.filter((doc) =>
-    doc.title.toLowerCase().includes(query.toLowerCase())
-  );
+  const filtered = documents
+    ?.filter((doc) => doc.title.toLowerCase().includes(query.toLowerCase()))
+    .sort((a, b) => {
+      if (!!a.starred === !!b.starred) return 0;
+      return a.starred ? -1 : 1;
+    });
+
+  async function toggleStar(id: number, current: boolean) {
+    await db.documents.update(id, { starred: !current });
+  }
 
   async function confirmDelete() {
     if (!pendingDelete) return;
@@ -36,6 +43,7 @@ export default function Sidebar() {
     const id = await db.documents.add({
       title: "Untitled",
       content: "",
+      starred: false,
       updatedAt: Date.now(),
       createdAt: Date.now(),
     });
@@ -83,17 +91,24 @@ export default function Sidebar() {
               <li
                 key={doc.id}
                 className={`group flex items-center transition-colors ${
-                  pathname === `/docs/${doc.id}`
-                    ? "bg-zinc-100"
-                    : "hover:bg-zinc-50"
+                  pathname === `/docs/${doc.id}` ? "bg-zinc-100" : "hover:bg-zinc-50"
                 }`}
               >
                 <button
+                  onClick={() => toggleStar(doc.id!, !!doc.starred)}
+                  className={`ml-2 shrink-0 rounded px-1 py-1 text-base transition-colors ${
+                    doc.starred
+                      ? "text-amber-400 hover:text-amber-500"
+                      : "text-zinc-200 hover:text-zinc-400 group-hover:text-zinc-300"
+                  }`}
+                  aria-label={doc.starred ? "Unstar document" : "Star document"}
+                >
+                  {doc.starred ? "★" : "☆"}
+                </button>
+                <button
                   onClick={() => router.push(`/docs/${doc.id}`)}
-                  className={`flex-1 px-4 py-2.5 text-left text-sm ${
-                    pathname === `/docs/${doc.id}`
-                      ? "font-medium text-zinc-900"
-                      : "text-zinc-700"
+                  className={`flex-1 px-3 py-2.5 text-left text-sm ${
+                    pathname === `/docs/${doc.id}` ? "font-medium text-zinc-900" : "text-zinc-700"
                   }`}
                 >
                   {doc.title}
