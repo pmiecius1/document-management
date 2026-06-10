@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Document Management
 
-## Getting Started
+A simple, private workspace for creating and managing documents. Everything is stored locally in your browser — no account, no server, no internet connection required.
 
-First, run the development server:
+## What it does
+
+- Create, edit, and delete documents from a persistent sidebar
+- Write in Markdown with a live Preview toggle
+- Star documents to pin favourites to the top of the list
+- Search documents by title as you type
+- Switch between light and dark themes — preference is remembered across reloads
+- Fully keyboard-navigable with visible focus indicators (WCAG 2.1 AA)
+- Responsive layout: sidebar-first on mobile, side-by-side on desktop
+
+## Screenshot
+
+![Workspace screenshot](screenshot.png)
+
+> Replace `screenshot.png` with an actual screenshot saved to the project root.
+
+## How to run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). If port 3000 is taken, Next.js will use the next free port — check the terminal output for the exact URL.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Optional tasks completed
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Starred documents** — a star button on each document in the sidebar pins favourites to the top of the list. Starred state is stored in IndexedDB alongside the document content and persists across reloads.
 
-## Learn More
+**Dark-mode toggle** — a sun/moon button in the sidebar footer switches the app between light and dark themes. The choice is saved in `localStorage` via `next-themes` and restored on every page load.
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Dexie.js (IndexedDB)
+- next-themes
