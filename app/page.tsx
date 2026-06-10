@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-6 px-8 text-center">
       <h1 className="text-4xl font-semibold tracking-tight">Document Management</h1>
-      <p className="max-w-md text-lg text-zinc-500">
+      <p className="max-w-md text-lg text-zinc-600">
         A simple, private workspace for creating and managing your documents.
         Everything is stored locally in your browser — no account required.
       </p>
