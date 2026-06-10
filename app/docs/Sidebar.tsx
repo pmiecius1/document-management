@@ -96,12 +96,12 @@ export default function Sidebar() {
               {query ? (
                 <>
                   <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">No results</p>
-                  <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">No documents match &ldquo;{query}&rdquo;.</p>
+                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">No documents match &ldquo;{query}&rdquo;.</p>
                 </>
               ) : (
                 <>
                   <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">No documents yet</p>
-                  <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">Click New Document to create your first one.</p>
+                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Click New Document to create your first one.</p>
                 </>
               )}
             </li>
@@ -120,7 +120,7 @@ export default function Sidebar() {
                   className={`ml-2 flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded text-base transition-colors ${
                     doc.starred
                       ? "text-amber-400 hover:text-amber-500"
-                      : "text-zinc-300 hover:text-zinc-400 group-hover:text-zinc-400 dark:text-zinc-600 dark:group-hover:text-zinc-500"
+                      : "text-zinc-400 hover:text-zinc-500 group-hover:text-zinc-500 dark:text-zinc-500 dark:group-hover:text-zinc-400"
                   }`}
                   aria-label={doc.starred ? "Unstar document" : "Star document"}
                 >
@@ -139,7 +139,7 @@ export default function Sidebar() {
                 </button>
                 <button
                   onClick={() => setPendingDelete({ id: doc.id!, title: doc.title })}
-                  className="mr-2 flex min-h-[44px] min-w-[44px] items-center justify-center rounded text-zinc-400 transition-opacity hover:bg-zinc-200 hover:text-zinc-600 focus:opacity-100 dark:hover:bg-zinc-700 dark:hover:text-zinc-300 block md:opacity-0 md:group-hover:opacity-100"
+                  className="mr-2 flex min-h-[44px] min-w-[44px] items-center justify-center rounded text-zinc-500 transition-opacity hover:bg-zinc-200 hover:text-zinc-700 focus:opacity-100 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-200 block md:opacity-0 md:group-hover:opacity-100"
                   aria-label="Delete document"
                 >
                   ✕

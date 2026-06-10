@@ -71,7 +71,7 @@ export default function Editor({ id }: Props) {
           ref={titleRef}
           placeholder="Untitled"
           aria-label="Document title"
-          className="flex-1 bg-transparent text-xl font-semibold text-zinc-900 placeholder-zinc-300 dark:text-zinc-50 dark:placeholder-zinc-700"
+          className="flex-1 bg-transparent text-xl font-semibold text-zinc-900 placeholder-zinc-400 dark:text-zinc-50 dark:placeholder-zinc-500"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -123,7 +123,7 @@ export default function Editor({ id }: Props) {
           onChange={(e) => setContent(e.target.value)}
           placeholder={"Start writing… (Markdown supported)\n\n# Heading\n**bold**  _italic_\n- bullet"}
           aria-label="Document body"
-          className="flex-1 resize-none px-8 py-6 font-mono text-sm leading-relaxed text-zinc-700 placeholder-zinc-300 dark:bg-zinc-950 dark:text-zinc-300 dark:placeholder-zinc-700"
+          className="flex-1 resize-none px-8 py-6 font-mono text-sm leading-relaxed text-zinc-700 placeholder-zinc-400 dark:bg-zinc-950 dark:text-zinc-300 dark:placeholder-zinc-500"
         />
       ) : (
         <div className="flex-1 overflow-y-auto px-8 py-6">
