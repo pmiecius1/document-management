@@ -48,7 +48,7 @@ export default function Editor({ id }: Props) {
     return (
       <main className="flex flex-1 flex-col items-center justify-center gap-3">
         <p className="text-sm font-medium text-zinc-700">Document not found.</p>
-        <Link href="/docs" className="text-sm text-zinc-400 underline hover:text-zinc-600">
+        <Link href="/docs" className="text-sm text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200">
           Back to workspace
         </Link>
       </main>
@@ -60,7 +60,7 @@ export default function Editor({ id }: Props) {
       <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800 md:px-8">
         <Link
           href="/docs"
-          className="mr-3 shrink-0 text-sm text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 md:hidden"
+          className="mr-3 shrink-0 text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 md:hidden"
         >
           ← Back
         </Link>
@@ -70,7 +70,8 @@ export default function Editor({ id }: Props) {
           onChange={(e) => setTitle(e.target.value)}
           ref={titleRef}
           placeholder="Untitled"
-          className="flex-1 bg-transparent text-xl font-semibold text-zinc-900 placeholder-zinc-300 outline-none dark:text-zinc-50 dark:placeholder-zinc-700"
+          aria-label="Document title"
+          className="flex-1 bg-transparent text-xl font-semibold text-zinc-900 placeholder-zinc-400 dark:text-zinc-50 dark:placeholder-zinc-500"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -80,27 +81,33 @@ export default function Editor({ id }: Props) {
         />
         <div className="ml-4 flex items-center gap-3">
           <span
+            aria-live="polite"
+            aria-atomic="true"
             className={`text-xs text-zinc-400 transition-opacity duration-300 ${saved ? "opacity-100" : "opacity-0"}`}
           >
-            Saved
+            {saved ? "Saved" : ""}
           </span>
-          <div className="flex rounded-md border border-zinc-200 text-xs font-medium dark:border-zinc-700">
+          <div role="tablist" aria-label="Editor mode" className="flex rounded-md border border-zinc-200 text-xs font-medium dark:border-zinc-700">
             <button
+              role="tab"
+              aria-selected={mode === "edit"}
               onClick={() => setMode("edit")}
               className={`px-3 py-1.5 transition-colors ${
                 mode === "edit"
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                  : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                  ? "bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white"
+                  : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100"
               } rounded-l-md`}
             >
               Edit
             </button>
             <button
+              role="tab"
+              aria-selected={mode === "preview"}
               onClick={() => setMode("preview")}
               className={`px-3 py-1.5 transition-colors ${
                 mode === "preview"
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                  : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                  ? "bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white"
+                  : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100"
               } rounded-r-md`}
             >
               Preview
@@ -115,7 +122,8 @@ export default function Editor({ id }: Props) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={"Start writing… (Markdown supported)\n\n# Heading\n**bold**  _italic_\n- bullet"}
-          className="flex-1 resize-none px-8 py-6 font-mono text-sm leading-relaxed text-zinc-700 placeholder-zinc-300 outline-none dark:bg-zinc-950 dark:text-zinc-300 dark:placeholder-zinc-700"
+          aria-label="Document body"
+          className="flex-1 resize-none px-8 py-6 font-mono text-sm leading-relaxed text-zinc-700 placeholder-zinc-400 dark:bg-zinc-950 dark:text-zinc-300 dark:placeholder-zinc-500"
         />
       ) : (
         <div className="flex-1 overflow-y-auto px-8 py-6">
@@ -136,7 +144,7 @@ export default function Editor({ id }: Props) {
               {content}
             </ReactMarkdown>
           ) : (
-            <p className="text-sm text-zinc-300 dark:text-zinc-600">Nothing to preview yet.</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-500">Nothing to preview yet.</p>
           )}
         </div>
       )}
