@@ -1,64 +1,19 @@
-# Persistence Strategy: IndexedDB
+# Reflection
 
-## Project Constraints
+## 1. The persistence consultation
+I asked Claude Code which storage mechanism would work for a single-user, no-backend, localhost-only app. It recommended IndexedDB wrapped with Dexie.js. The alternatives it surfaced were: localStorage (5 MB cap, strings only), sessionStorage (lost on tab close), cookies (designed for small tokens, redundant without a server), in-memory React state (lost on every reload), and a server-side database (ruled out by the no-backend constraint). IndexedDB was the only option that cleared all three project constraints — no meaningful size limit, survives sessions, entirely client-side, stores structured objects natively. The reasoning was clear enough that there was nothing to debate; every alternative failed on at least one hard constraint.
 
-- Single user — no auth, no multi-tenancy
-- No backend — no database, no server-side API
-- No hosted environment — runs on localhost only
+## 2. Search → paste → cite
+The clearest example came during dark mode setup. The toggle was calling `setTheme("dark")` correctly and next-themes was adding `class="dark"` to `<html>`, but nothing changed visually. Rather than describing the symptom, I asked Claude Code to inspect the compiled output at `.next/dev/static/chunks/`. The compiled CSS confirmed that all `dark:` utilities were wrapped in `@media (prefers-color-scheme: dark)` — the class selector was never generated. That concrete evidence changed the outcome: instead of continuing to adjust the `@custom-variant dark` syntax, the agent switched approach entirely and identified that adding `tailwind.config.ts` with `darkMode: "class"` was the correct fix for Tailwind v4.
 
----
+## 3. CLAUDE.md catching drift
+I did not notice a clear instance of CLAUDE.md catching the agent mid-session. Its most useful role was preventative: having the constraints (single user, no backend, localhost only) documented meant the agent never suggested adding authentication, API routes, or a hosted deployment. The absence of drift may itself be evidence that documenting constraints upfront works.
 
-## Why IndexedDB
+## 4. The design pass
+The direction I gave was entirely accessibility-driven: meet WCAG 2.1 AA. I specified minimum 44×44 px touch targets, readable contrast ratios for placeholder and secondary text, a larger and more prominent dark mode toggle, and visible focus indicators on every interactive element. The scaffolded default was a pure zinc monochrome palette where interactive elements were visually indistinct from static content. The change that finally felt right was introducing indigo as a primary accent colour — buttons, active states, and links now have a consistent visual identity without altering the app's overall neutral tone.
 
-This app is single-user, has no backend, and runs on localhost only. IndexedDB is the only browser-native storage mechanism that satisfies all three constraints without compromise:
+## 5. Harder than expected
+Context engineering for Next.js was harder than the static-site lesson. With plain HTML there is nothing to look up. With Next.js, when things broke — dark mode, hydration mismatches, async params — I did not always know which part of the documentation to read before prompting. I am still learning to predict which concepts the agent needs before it runs into problems, rather than working backwards from an error.
 
-- No practical storage limit — handles a document app's worth of data without hitting a cap
-- Persists between sessions — survives tab and browser close/reopen
-- Entirely client-side — no server, no accounts, no network required
-- Stores JavaScript objects directly — no need to serialise everything to strings
-
-The raw browser API is verbose, so Dexie.js will be used as a lightweight wrapper to keep the code clean.
-
----
-
-## Risks to address in this project
-
-### High priority
-
-**Accidental data loss from clearing browser storage**
-IndexedDB is wiped if the user clears browser/site data. There is no recovery.
-Mitigation: build an export-to-file feature so documents can be saved to disk as a manual backup.
-
-**Schema changes breaking saved data**
-As the app evolves, old documents stored under a previous data structure may not match what new code expects.
-Mitigation: version the schema from day one and write migration logic for every structural change. Dexie.js handles this with its `version()` API.
-
-### Medium priority
-
-**Storage eviction under browser pressure**
-Browsers can silently delete IndexedDB data if storage is classified as best-effort rather than persistent.
-Mitigation: call `StorageManager.persist()` on first load to request persistent storage from the browser.
-
-### Low priority (address as the app matures)
-
-**No undo on destructive actions**
-Deleted or overwritten documents cannot be recovered without an explicit undo mechanism.
-Mitigation: implement soft deletes (flag as deleted, don't remove) or maintain a simple version history per document.
-
----
-
-## Accepted limitations
-
-Data is tied to one browser on one machine. It will not appear in another browser or on another device. Given the localhost-only, single-user constraints of this project, this is acceptable and does not need to be mitigated.
-
----
-
-# Accessibility Pass (PR #11)
-
-## Prompts and process
-
-PR #11 was built through an iterative series of prompts. The first prompt asked for WCAG 2.1 AA compliance across text size, text colour, button size, the dark mode toggle, and the overall colour scheme, and also invited suggestions for additional improvements. A follow-up clarified that mobile view should be covered too, which led to a fix for the delete button being permanently invisible on touch devices (hover-only visibility does not work on mobile). A second round addressed placeholder text contrast after the "Start writing…" hint was identified as near-invisible at zinc-300 (~2:1 contrast ratio). A final prompt requested a full colour scheme update, which produced the indigo accent system.
-
-## Design decisions
-
-The main design decisions were: adopting WCAG 2.1 AA as the compliance target; using a single global `focus-visible` rule rather than per-element focus styles; setting 44×44 px as the minimum touch target for all interactive controls; and introducing indigo as a primary accent colour to replace the all-zinc monochrome palette. The indigo choice was driven by WCAG 1.4.1 (use of colour) — without a distinct hue, interactive elements were indistinguishable from static content by colour alone. Zinc was kept for structural chrome, amber for starred documents, and red for destructive actions, preserving existing semantic meaning while giving interactive elements a clear visual identity.
+## 6. Docs folder
+The persistence decision rationale was genuinely useful — having the reasoning written down made the choice feel grounded. The risk register was good to write as a thinking exercise but I never referred back to it during development. Next time I would keep decision rationale, skip risks unless they are actively shaping implementation choices.
