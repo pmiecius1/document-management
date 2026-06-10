@@ -73,7 +73,7 @@ export default function Sidebar() {
         <div className="border-b border-zinc-200 px-4 py-4 dark:border-zinc-800">
           <button
             onClick={handleNewDocument}
-            className="mb-3 w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+            className="mb-3 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400"
           >
             New Document
           </button>
@@ -111,7 +111,7 @@ export default function Sidebar() {
                 key={doc.id}
                 className={`group flex items-center transition-colors ${
                   pathname === `/docs/${doc.id}`
-                    ? "bg-zinc-100 dark:bg-zinc-800"
+                    ? "border-l-2 border-indigo-500 bg-indigo-50 dark:bg-indigo-950"
                     : "hover:bg-zinc-50 dark:hover:bg-zinc-900"
                 }`}
               >
@@ -131,7 +131,7 @@ export default function Sidebar() {
                   aria-current={pathname === `/docs/${doc.id}` ? "page" : undefined}
                   className={`flex-1 px-3 py-2.5 text-left text-sm ${
                     pathname === `/docs/${doc.id}`
-                      ? "font-medium text-zinc-900 dark:text-zinc-50"
+                      ? "font-medium text-indigo-700 dark:text-indigo-300"
                       : "text-zinc-700 dark:text-zinc-300"
                   }`}
                 >

@@ -10,7 +10,7 @@ export default function Home() {
       </p>
       <Link
         href="/docs"
-        className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+        className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
       >
         Go to Workspace
       </Link>

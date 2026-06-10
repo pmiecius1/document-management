@@ -48,7 +48,7 @@ export default function Editor({ id }: Props) {
     return (
       <main className="flex flex-1 flex-col items-center justify-center gap-3">
         <p className="text-sm font-medium text-zinc-700">Document not found.</p>
-        <Link href="/docs" className="text-sm text-zinc-600 underline hover:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-100">
+        <Link href="/docs" className="text-sm text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200">
           Back to workspace
         </Link>
       </main>
@@ -60,7 +60,7 @@ export default function Editor({ id }: Props) {
       <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800 md:px-8">
         <Link
           href="/docs"
-          className="mr-3 shrink-0 text-sm text-zinc-600 hover:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-100 md:hidden"
+          className="mr-3 shrink-0 text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 md:hidden"
         >
           ← Back
         </Link>
@@ -94,7 +94,7 @@ export default function Editor({ id }: Props) {
               onClick={() => setMode("edit")}
               className={`px-3 py-1.5 transition-colors ${
                 mode === "edit"
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  ? "bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white"
                   : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100"
               } rounded-l-md`}
             >
@@ -106,7 +106,7 @@ export default function Editor({ id }: Props) {
               onClick={() => setMode("preview")}
               className={`px-3 py-1.5 transition-colors ${
                 mode === "preview"
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  ? "bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white"
                   : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100"
               } rounded-r-md`}
             >
