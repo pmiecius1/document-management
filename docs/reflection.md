@@ -50,3 +50,15 @@ Mitigation: implement soft deletes (flag as deleted, don't remove) or maintain a
 ## Accepted limitations
 
 Data is tied to one browser on one machine. It will not appear in another browser or on another device. Given the localhost-only, single-user constraints of this project, this is acceptable and does not need to be mitigated.
+
+---
+
+# Accessibility Pass (PR #11)
+
+## Prompts and process
+
+PR #11 was built through an iterative series of prompts. The first prompt asked for WCAG 2.1 AA compliance across text size, text colour, button size, the dark mode toggle, and the overall colour scheme, and also invited suggestions for additional improvements. A follow-up clarified that mobile view should be covered too, which led to a fix for the delete button being permanently invisible on touch devices (hover-only visibility does not work on mobile). A second round addressed placeholder text contrast after the "Start writing…" hint was identified as near-invisible at zinc-300 (~2:1 contrast ratio). A final prompt requested a full colour scheme update, which produced the indigo accent system.
+
+## Design decisions
+
+The main design decisions were: adopting WCAG 2.1 AA as the compliance target; using a single global `focus-visible` rule rather than per-element focus styles; setting 44×44 px as the minimum touch target for all interactive controls; and introducing indigo as a primary accent colour to replace the all-zinc monochrome palette. The indigo choice was driven by WCAG 1.4.1 (use of colour) — without a distinct hue, interactive elements were indistinguishable from static content by colour alone. Zinc was kept for structural chrome, amber for starred documents, and red for destructive actions, preserving existing semantic meaning while giving interactive elements a clear visual identity.
