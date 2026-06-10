@@ -16,8 +16,6 @@ A simple, private workspace for creating and managing documents. Everything is s
 
 ![Workspace screenshot](screenshot.png)
 
-> Replace `screenshot.png` with an actual screenshot saved to the project root.
-
 ## How to run locally
 
 ```bash
